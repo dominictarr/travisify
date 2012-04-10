@@ -20,6 +20,13 @@ withConfig(function (config) {
         else if (process.argv[2] === 'test') {
             testHook(config, repo);
         }
+        else if (process.argv[2] === 'badge') {
+            console.log([
+                '[![build status](https://secure.travis-ci.org/',
+                repo, '.png)]',
+                '(http://travis-ci.org/', repo, ')',
+            ].join(''));
+        }
         else addHook(config, repo)
     });
 });

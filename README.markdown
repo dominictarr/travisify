@@ -46,6 +46,24 @@ $ travisify test
 test hook sent for substack/upnode/213466
 ```
 
+commands
+========
+
+travisify
+---------
+
+Add a github hook for travis if one hasn't already been added.
+
+travisify test
+--------------
+
+Trigger a test request for the travis hook.
+
+travisify badge
+---------------
+
+Generate a markdown travis badge to put in your readme.
+
 license
 =======
 
