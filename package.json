@@ -1,6 +1,6 @@
 {
     "name" : "travisify",
-    "description" : "easily update github admin hooks for travis-ci",
+    "description" : "add travis-ci hooks to github",
     "version" : "0.0.0",
     "repository" : {
         "type" : "git",
@@ -10,7 +10,8 @@
         "travisify" : "bin/cmd.js"
     },
     "dependencies" : {
-        "mkdirp" : "~0.3.1"
+        "mkdirp" : "~0.3.1",
+        "request" : "~2.9.200"
     },
     "keywords" : [
         "travis",

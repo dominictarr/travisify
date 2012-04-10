@@ -15,6 +15,15 @@ function remote (cb) {
 }
 
 withConfig(function (config) {
+    var doc = {
+        name : 'travis',
+        config : {
+            token : config.token,
+            domain : '',
+            user : config.user,
+        },
+    };
+    
     remote(function (err, repo) {
         if (err) return console.error(err);
         
@@ -22,9 +31,8 @@ withConfig(function (config) {
             + [ config.user, config.pass ].map(encodeURIComponent).join(':')
             + '@api.github.com/repos/' + repo + '/hooks'
         ;
-        var opts = { uri : uri, json : true };
         
-        request.get(opts, function (err, res, body) {
+        request.get({ uri : uri, json : true }, function (err, res, body) {
             if (err) return console.error(err);
             if (res.statusCode !== 200) return console.error(body);
             if (!Array.isArray(body)) {
@@ -40,6 +48,15 @@ withConfig(function (config) {
                 return console.log('this repo already has a travis hook');
             }
             
+            var opts = {
+                uri : uri,
+                body : JSON.stringify(doc),
+            };
+            request.post(opts, function (err, res, body) {
+                if (err) console.error(err);
+                else if (res.statusCode !== 200) console.log(body)
+                else console.log('travis hook added for ' + repo)
+            });
         });
     });
 });
