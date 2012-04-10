@@ -15,15 +15,6 @@ function remote (cb) {
 }
 
 withConfig(function (config) {
-    var doc = {
-        name : 'travis',
-        config : {
-            token : config.token,
-            domain : '',
-            user : config.user,
-        },
-    };
-    
     remote(function (err, repo) {
         if (err) console.error(err)
         else if (process.argv[2] === 'test') {
@@ -77,6 +68,15 @@ function testHook (config, repo) {
 
 function addHook (config, repo) {
     var uri = hookUri(config, repo);
+    var doc = {
+        name : 'travis',
+        config : {
+            token : config.token,
+            domain : '',
+            user : config.user,
+        },
+    };
+    
     getHook(uri, function (err, hook) {
         if (err) return console.error(err);
         if (hook) return console.log('this repo already has a travis hook');
@@ -84,6 +84,7 @@ function addHook (config, repo) {
         var opts = {
             uri : uri,
             body : JSON.stringify(doc),
+            json : true
         };
         request.post(opts, function (err, res, body) {
             if (err) console.error(err);
