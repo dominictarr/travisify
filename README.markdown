@@ -28,6 +28,15 @@ travis hook added for substack/upnode with id 213466
 
 Now every time you push to github your tests will be run on travis-ci.
 
+Make sure to `git add` a `.travis.yml` file like this before you push:
+
+``` yaml
+language: node_js
+node_js:
+  - 0.4
+  - 0.6
+```
+
 If you want to trigger the tests manually you can use the `travisify test`
 command:
 
