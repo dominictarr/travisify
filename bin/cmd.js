@@ -95,8 +95,7 @@ function addHook (config, repo) {
         };
         request.post(opts, function (err, res, body) {
             if (err) console.error(err);
-            else if (res.statusCode !== 200) console.log(body)
-            else if (body.id) {
+            else if (body && body.id) {
                 console.log('travis hook added for ' + repo
                     + ' with id ' + body.id);
             }
