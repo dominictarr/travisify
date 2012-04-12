@@ -15,27 +15,20 @@ usage
 
 Navigate to a git project that you've set up remotes for on github, then run
 `travisify`. The first time you run `travisify` it will prompt you for your
-account information.
+github account and travis api key.
 
 ```
 $ cd ~/projects/upnode
 $ travisify
-github username: substack
-github password:
-travis-ci api key: abcdefghijklmnopqrst
+# created a .travis.yml
+# make sure to `git add .travis.yml`
 travis hook added for substack/upnode with id 213466
 ```
 
 Now every time you push to github your tests will be run on travis-ci.
 
-Make sure to `git add` a `.travis.yml` file like this before you push:
-
-``` yaml
-language: node_js
-node_js:
-  - 0.4
-  - 0.6
-```
+Travisify looks at your `package.json`'s engine field to generate a
+`.travis.yml` file if one doesn't already exist.
 
 If you want to trigger the tests manually you can use the `travisify test`
 command:
