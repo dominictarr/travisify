@@ -1,7 +1,13 @@
 #!/usr/bin/env node
-var withConfig = require('../lib/config');
+var path = require('path');
+var fs = require('fs');
 var exec = require('child_process').exec;
+
 var request = require('request');
+var semver = require('semver');
+
+var withConfig = require('../lib/config');
+var gitDir = require('../lib/git_dir');
 
 function remote (cb) {
     exec('git remote -v', function (err, stdout, stderr) {
@@ -27,7 +33,37 @@ withConfig(function (config) {
                 '(http://travis-ci.org/', repo, ')',
             ].join(''));
         }
-        else addHook(config, repo)
+        else {
+            var dir = gitDir(process.cwd());
+            if (!path.existsSync(dir + '/.travis.yml')) {
+                var pkg = path.existsSync(dir + '/package.json')
+                    ? JSON.parse(fs.readFileSync(dir + '/package.json'))
+                    : {}
+                ;
+                var sv = (pkg.engines || {}).node || '>=0.4';
+                var vs = [ '0.4.12', '0.6.15' ].filter(function (v) {
+                    return semver.satisfies(v, sv);
+                });
+                if (vs.length === 0) {
+                    console.error('ERROR: no node versions on travis'
+                        + ' match the engine field semver'
+                    );
+                }
+                else {
+                    fs.writeFileSync(dir + '/.travis.yml', [
+                        'language: node_js',
+                        'node_js:',
+                        vs.map(function (v) {
+                            return '  - ' + v.replace(/\.\d+$/, '');
+                        }).join('\n')
+                    ].join('\n') + '\n');
+                    
+                    console.log('# created a .travis.yml');
+                    console.log('# make sure to `git add .travis.yml`');
+                }
+            }
+            addHook(config, repo)
+        }
     });
 });
 
