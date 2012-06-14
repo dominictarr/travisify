@@ -15,10 +15,10 @@ function remote (cb) {
         if (stderr) return cb(stderr)
         
         var m = stdout.match(
-            /(?:git@github\.com:|\/github\.com\/)(\S+)\.git/
+            /(?:git@github\.com:|\/github\.com\/)(\S+)/
         );
         if (!m) return cb('no github remote found');
-        cb(null, m[1]);
+        cb(null, m[1].replace(/\.git$/, ''));
     });
 }
 
