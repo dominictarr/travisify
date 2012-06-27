@@ -1,7 +1,7 @@
 {
     "name" : "travisify",
     "description" : "add travis-ci hooks to github",
-    "version" : "0.1.4",
+    "version" : "0.1.5",
     "repository" : {
         "type" : "git",
         "url" : "git://github.com/substack/travisify.git"
