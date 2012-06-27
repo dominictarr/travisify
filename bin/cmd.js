@@ -15,7 +15,7 @@ function remote (cb) {
         if (stderr) return cb(stderr)
         
         var m = stdout.match(
-            /origin\s+(?:git@github\.com:|\/github\.com\/)(\S+)/
+            /origin\s+(?:git@github\.com:|https:\/\/github\.com\/)(\S+)/
         );
         if (!m) return cb('no github remote found');
         cb(null, m[1].replace(/\.git$/, ''));
