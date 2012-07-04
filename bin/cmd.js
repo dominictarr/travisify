@@ -3,8 +3,6 @@ var path = require('path');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-var existsSync = fs.exists || path.existsSync
-
 var request = require('request');
 var semver = require('semver');
 
@@ -39,8 +37,8 @@ withConfig(function (config) {
         }
         else {
             var dir = gitDir(process.cwd());
-            if (!existsSync(dir + '/.travis.yml')
-            && existsSync(dir + '/package.json')) {
+            if (!fs.existsSync(dir + '/.travis.yml')
+            && fs.existsSync(dir + '/package.json')) {
                 var pkg = JSON.parse(fs.readFileSync(dir + '/package.json'));
                 
                 var sv = (pkg.engines || {}).node || '>=0.4';
