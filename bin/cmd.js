@@ -42,7 +42,7 @@ withConfig(function (config) {
                 var pkg = JSON.parse(fs.readFileSync(dir + '/package.json'));
                 
                 var sv = (pkg.engines || {}).node || '>=0.4';
-                var vs = [ '0.4.12', '0.6.15' ].filter(function (v) {
+                var vs = [ '0.4.12', '0.6.15', '0.8.0' ].filter(function (v) {
                     return semver.satisfies(v, sv);
                 });
                 if (vs.length === 0) {
